@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--
+  Vibe coded by a backend engineer who has 0 idea what he is doing
+  on the frontend. Workshop intro slides for wroclove.rb 2026.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mutation testing in the agentic world</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; background: #f4f1e8; color: #000; font-family: system-ui, -apple-system, sans-serif; }
+#title { position: fixed; top: 8vh; left: 0; width: 100%; text-align: center; font-size: 2.6rem; font-weight: 700; }
+#subtitle { position: fixed; top: 17vh; left: 0; width: 100%; text-align: center; font-size: 1.3rem; color: #555; }
+#body { position: fixed; top: 28vh; left: 5%; width: 90%; text-align: center; font-size: 1.7rem; line-height: 1.5; white-space: pre-line; }
+#body pre { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 1.4rem; text-align: left; display: inline-block; white-space: pre; background: #e8e3d0; padding: 1rem 1.5rem; border-radius: 4px; }
+#hint { position: fixed; bottom: 0.8rem; right: 0.8rem; font-family: ui-monospace, monospace; font-size: 0.75rem; color: #999; }
+#hint.hidden { display: none; }
+#counter { position: fixed; bottom: 0.8rem; left: 0.8rem; font-family: ui-monospace, monospace; font-size: 0.75rem; color: #999; }
+#counter.hidden { display: none; }
+</style>
+</head>
+<body>
+<div id="title"></div>
+<div id="subtitle"></div>
+<div id="body"></div>
+<div id="hint" class="hidden">space/&rarr; next | &larr; back | f fullscreen | h hint</div>
+<div id="counter" class="hidden"></div>
+<script>
+const slides = [
+  {
+    title: 'Mutation testing in the agentic world',
+    subtitle: 'Markus Schirp -- wroclove.rb 2026 workshop',
+  },
+  {
+    body: `~2 hours, depends a lot on the crowd.
+4 phases. Hands on.
+
+You will write code. You will run mutant.
+You will direct an agent.
+You will hopefully be surprised.
+
+I prefer discussion over silence.`,
+  },
+  {
+    title: 'Two facts',
+    body: `Everyone gets numb.
+
+LLMs also.`,
+  },
+  {
+    body: `We all need a kick in the butt.
+
+Mutation testing is one way to automate it.`,
+  },
+  {
+    title: 'Mutation testing',
+    body: `<pre>code -&gt; hypothesis of reduction (mutation) -&gt; run tests (alive|killed)</pre>`,
+  },
+  {
+    title: 'Vocabulary',
+    body: `<pre>Mutation: one change to the code
+Subject:  what is being mutated (a method)
+Alive:    no test caught the mutation
+Killed:   a test caught it
+Session:  one full mutant run</pre>`,
+  },
+  {
+    title: 'Enough explanation.',
+    body: `<pre>git clone https://github.com/mbj/wrocloverb-2026-workshop.git
+cd wrocloverb-2026-workshop/phase-2-first-taste</pre>
+
+Then open the README.`,
+  },
+];
+
+let idx = 0;
+let hintVisible = false;
+
+function render() {
+  const s = slides[idx];
+  document.getElementById('title').textContent = s.title || '';
+  document.getElementById('subtitle').textContent = s.subtitle || '';
+  document.getElementById('body').innerHTML = s.body || '';
+  document.getElementById('counter').textContent = `[${idx + 1}/${slides.length}]`;
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    if (idx < slides.length - 1) { idx++; render(); }
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    if (idx > 0) { idx--; render(); }
+  } else if (e.key === 'f') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  } else if (e.key === 'h') {
+    hintVisible = !hintVisible;
+    document.getElementById('hint').classList.toggle('hidden', !hintVisible);
+    document.getElementById('counter').classList.toggle('hidden', !hintVisible);
+  }
+});
+
+render();
+</script>
+</body>
+</html>

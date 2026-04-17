@@ -1,0 +1,18 @@
+usage: opensource
+
+integration:
+  name: rspec
+
+includes:
+  - lib
+
+requires:
+  - age
+
+matcher:
+  subjects:
+  - Age*
+
+coverage_criteria:
+  timeout: true
+  process_abort: true
